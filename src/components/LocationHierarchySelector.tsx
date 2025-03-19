@@ -69,21 +69,6 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
     setSearchTerm(e.target.value);
   };
   
-  const handleSelectLocation = (location: LocationType) => {
-    setSelectedLocation(location);
-    setSearchTerm(location.name);
-    setIsOpen(false);
-    if (onSelect) onSelect(location);
-  };
-  
-  const clearSelection = () => {
-    setSelectedLocation(null);
-    setSearchTerm('');
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-  
   // Build the hierarchy path for a location
   const buildHierarchyPath = (location: LocationType): LocationType[] => {
     const path: LocationType[] = [];
@@ -101,6 +86,22 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
   const getPathString = (location: LocationType): string => {
     const path = buildHierarchyPath(location);
     return path.map(item => item.name).join(' → ');
+  };
+  
+  const handleSelectLocation = (location: LocationType) => {
+    setSelectedLocation(location);
+    // Update the search term to show the full hierarchical path
+    setSearchTerm(getPathString(location));
+    setIsOpen(false);
+    if (onSelect) onSelect(location);
+  };
+  
+  const clearSelection = () => {
+    setSelectedLocation(null);
+    setSearchTerm('');
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
   
   return (
