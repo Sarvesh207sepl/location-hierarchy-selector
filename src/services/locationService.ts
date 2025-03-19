@@ -1,5 +1,5 @@
 
-// Sample hierarchical location data
+// Sample hierarchical location data with Indian names
 export interface LocationType {
   id: string;
   name: string;
@@ -8,59 +8,63 @@ export interface LocationType {
   children?: LocationType[];
 }
 
-// Create a nested structure of locations
+// Create a nested structure of locations with Indian names
 const createLocationHierarchy = (): LocationType[] => {
   // Countries
-  const usa: LocationType = { id: 'usa', name: 'United States', type: 'Country', parent: null };
-  const canada: LocationType = { id: 'canada', name: 'Canada', type: 'Country', parent: null };
+  const india: LocationType = { id: 'india', name: 'India', type: 'Country', parent: null };
   
-  // States/Provinces
-  const california: LocationType = { id: 'ca', name: 'California', type: 'State', parent: usa };
-  const newyork: LocationType = { id: 'ny', name: 'New York', type: 'State', parent: usa };
-  const ontario: LocationType = { id: 'on', name: 'Ontario', type: 'Province', parent: canada };
-  const quebec: LocationType = { id: 'qc', name: 'Quebec', type: 'Province', parent: canada };
+  // States/UTs
+  const maharashtra: LocationType = { id: 'mh', name: 'Maharashtra', type: 'State', parent: india };
+  const delhi: LocationType = { id: 'dl', name: 'Delhi', type: 'Union Territory', parent: india };
+  const karnataka: LocationType = { id: 'ka', name: 'Karnataka', type: 'State', parent: india };
+  const tamilnadu: LocationType = { id: 'tn', name: 'Tamil Nadu', type: 'State', parent: india };
   
   // Cities
-  const sanfrancisco: LocationType = { id: 'sf', name: 'San Francisco', type: 'City', parent: california };
-  const losangeles: LocationType = { id: 'la', name: 'Los Angeles', type: 'City', parent: california };
-  const sandiego: LocationType = { id: 'sd', name: 'San Diego', type: 'City', parent: california };
-  const nyc: LocationType = { id: 'nyc', name: 'New York City', type: 'City', parent: newyork };
-  const buffalo: LocationType = { id: 'buf', name: 'Buffalo', type: 'City', parent: newyork };
-  const toronto: LocationType = { id: 'tor', name: 'Toronto', type: 'City', parent: ontario };
-  const ottawa: LocationType = { id: 'ott', name: 'Ottawa', type: 'City', parent: ontario };
-  const montreal: LocationType = { id: 'mtl', name: 'Montreal', type: 'City', parent: quebec };
-  const quebeccity: LocationType = { id: 'qcc', name: 'Quebec City', type: 'City', parent: quebec };
+  const mumbai: LocationType = { id: 'mumbai', name: 'Mumbai', type: 'City', parent: maharashtra };
+  const pune: LocationType = { id: 'pune', name: 'Pune', type: 'City', parent: maharashtra };
+  const nagpur: LocationType = { id: 'nagpur', name: 'Nagpur', type: 'City', parent: maharashtra };
+  const newdelhi: LocationType = { id: 'newdelhi', name: 'New Delhi', type: 'City', parent: delhi };
+  const bangalore: LocationType = { id: 'bangalore', name: 'Bangalore', type: 'City', parent: karnataka };
+  const mysore: LocationType = { id: 'mysore', name: 'Mysore', type: 'City', parent: karnataka };
+  const chennai: LocationType = { id: 'chennai', name: 'Chennai', type: 'City', parent: tamilnadu };
+  const coimbatore: LocationType = { id: 'coimbatore', name: 'Coimbatore', type: 'City', parent: tamilnadu };
   
-  // Districts
-  const mission: LocationType = { id: 'mission', name: 'Mission District', type: 'District', parent: sanfrancisco };
-  const soma: LocationType = { id: 'soma', name: 'SoMa', type: 'District', parent: sanfrancisco };
-  const downtown: LocationType = { id: 'downtown', name: 'Downtown', type: 'District', parent: losangeles };
-  const hollywood: LocationType = { id: 'hollywood', name: 'Hollywood', type: 'District', parent: losangeles };
-  const manhattan: LocationType = { id: 'manhattan', name: 'Manhattan', type: 'District', parent: nyc };
-  const brooklyn: LocationType = { id: 'brooklyn', name: 'Brooklyn', type: 'District', parent: nyc };
-  const downtown_toronto: LocationType = { id: 'dt_tor', name: 'Downtown', type: 'District', parent: toronto };
-  const plateau: LocationType = { id: 'plateau', name: 'Le Plateau', type: 'District', parent: montreal };
+  // Districts/Areas
+  const bandra: LocationType = { id: 'bandra', name: 'Bandra', type: 'District', parent: mumbai };
+  const andheri: LocationType = { id: 'andheri', name: 'Andheri', type: 'District', parent: mumbai };
+  const dadar: LocationType = { id: 'dadar', name: 'Dadar', type: 'District', parent: mumbai };
+  const koregaon: LocationType = { id: 'koregaon', name: 'Koregaon Park', type: 'District', parent: pune };
+  const aundh: LocationType = { id: 'aundh', name: 'Aundh', type: 'District', parent: pune };
+  const chandni: LocationType = { id: 'chandni', name: 'Chandni Chowk', type: 'District', parent: newdelhi };
+  const connaught: LocationType = { id: 'connaught', name: 'Connaught Place', type: 'District', parent: newdelhi };
+  const indiranagar: LocationType = { id: 'indiranagar', name: 'Indiranagar', type: 'District', parent: bangalore };
+  const koramangala: LocationType = { id: 'koramangala', name: 'Koramangala', type: 'District', parent: bangalore };
+  const mylapore: LocationType = { id: 'mylapore', name: 'Mylapore', type: 'District', parent: chennai };
+  const adyar: LocationType = { id: 'adyar', name: 'Adyar', type: 'District', parent: chennai };
   
   // Localities/Neighborhoods
-  const missionDolores: LocationType = { id: 'mission_dolores', name: 'Mission Dolores', type: 'Locality', parent: mission };
-  const noeValley: LocationType = { id: 'noe_valley', name: 'Noe Valley', type: 'Locality', parent: mission };
-  const financial: LocationType = { id: 'financial', name: 'Financial District', type: 'Locality', parent: soma };
-  const beverly: LocationType = { id: 'beverly', name: 'Beverly Hills', type: 'Locality', parent: downtown };
-  const venice: LocationType = { id: 'venice', name: 'Venice Beach', type: 'Locality', parent: downtown };
-  const westHollywood: LocationType = { id: 'west_hollywood', name: 'West Hollywood', type: 'Locality', parent: hollywood };
-  const upperEast: LocationType = { id: 'upper_east', name: 'Upper East Side', type: 'Locality', parent: manhattan };
-  const chelsea: LocationType = { id: 'chelsea', name: 'Chelsea', type: 'Locality', parent: manhattan };
-  const williamsburg: LocationType = { id: 'williamsburg', name: 'Williamsburg', type: 'Locality', parent: brooklyn };
-  const yorkville: LocationType = { id: 'yorkville', name: 'Yorkville', type: 'Locality', parent: downtown_toronto };
-  const mileEnd: LocationType = { id: 'mile_end', name: 'Mile End', type: 'Locality', parent: plateau };
+  const pali: LocationType = { id: 'pali', name: 'Pali Hill', type: 'Locality', parent: bandra };
+  const bandraW: LocationType = { id: 'bandraW', name: 'Bandra West', type: 'Locality', parent: bandra };
+  const lokhandwala: LocationType = { id: 'lokhandwala', name: 'Lokhandwala Complex', type: 'Locality', parent: andheri };
+  const versova: LocationType = { id: 'versova', name: 'Versova', type: 'Locality', parent: andheri };
+  const shivaji: LocationType = { id: 'shivaji', name: 'Shivaji Park', type: 'Locality', parent: dadar };
+  const lane7: LocationType = { id: 'lane7', name: 'Lane 7', type: 'Locality', parent: koregaon };
+  const centralBizDistrict: LocationType = { id: 'cbd', name: 'Central Business District', type: 'Locality', parent: koregaon };
+  const baner: LocationType = { id: 'baner', name: 'Baner Road', type: 'Locality', parent: aundh };
+  const rajiv: LocationType = { id: 'rajiv', name: 'Rajiv Chowk', type: 'Locality', parent: connaught };
+  const janpath: LocationType = { id: 'janpath', name: 'Janpath', type: 'Locality', parent: connaught };
+  const HAL: LocationType = { id: 'HAL', name: 'HAL Old Airport Road', type: 'Locality', parent: indiranagar };
+  const forumMall: LocationType = { id: 'forumMall', name: 'Forum Mall Area', type: 'Locality', parent: koramangala };
+  const mandaveli: LocationType = { id: 'mandaveli', name: 'Mandaveli', type: 'Locality', parent: mylapore };
+  const besant: LocationType = { id: 'besant', name: 'Besant Nagar', type: 'Locality', parent: adyar };
   
   // Flatten the hierarchy for easy search
   const allLocations = [
-    usa, canada,
-    california, newyork, ontario, quebec,
-    sanfrancisco, losangeles, sandiego, nyc, buffalo, toronto, ottawa, montreal, quebeccity,
-    mission, soma, downtown, hollywood, manhattan, brooklyn, downtown_toronto, plateau,
-    missionDolores, noeValley, financial, beverly, venice, westHollywood, upperEast, chelsea, williamsburg, yorkville, mileEnd
+    india,
+    maharashtra, delhi, karnataka, tamilnadu,
+    mumbai, pune, nagpur, newdelhi, bangalore, mysore, chennai, coimbatore,
+    bandra, andheri, dadar, koregaon, aundh, chandni, connaught, indiranagar, koramangala, mylapore, adyar,
+    pali, bandraW, lokhandwala, versova, shivaji, lane7, centralBizDistrict, baner, rajiv, janpath, HAL, forumMall, mandaveli, besant
   ];
   
   return allLocations;
