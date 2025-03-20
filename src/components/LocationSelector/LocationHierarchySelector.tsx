@@ -10,7 +10,7 @@ import { buildHierarchyPath, getPathString } from './locationUtils';
 
 const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
   startPoint = 'District',
-  endPoint = 'Locality',
+  endPoint = 'Village',
   onSelect,
   className,
 }) => {

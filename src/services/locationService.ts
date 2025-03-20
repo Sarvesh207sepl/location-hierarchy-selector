@@ -1,73 +1,283 @@
 
-// Sample hierarchical location data with Indian names
+// Types based on the provided JSON structure
 export interface LocationType {
-  id: string;
-  name: string;
-  type: string;
-  parent: LocationType | null;
+  id: string | number;
+  displayName: string;
+  locCode: string;
+  parentID?: string | number | null;
+  locIdnCode?: string;
+  locCatId?: number;
+  orgId?: number;
+  locCategoryName: string;
+  prodClassName?: string;
+  hierarchyId?: any;
+  parent?: LocationType | null;
+  location?: LocationType[];
   children?: LocationType[];
 }
 
-// Create a nested structure of locations with Indian names
+// Create a nested structure of locations with Indian names based on the provided JSON
 const createLocationHierarchy = (): LocationType[] => {
-  // Countries
-  const india: LocationType = { id: 'india', name: 'India', type: 'Country', parent: null };
-  
-  // States/UTs
-  const maharashtra: LocationType = { id: 'mh', name: 'Maharashtra', type: 'State', parent: india };
-  const delhi: LocationType = { id: 'dl', name: 'Delhi', type: 'Union Territory', parent: india };
-  const karnataka: LocationType = { id: 'ka', name: 'Karnataka', type: 'State', parent: india };
-  const tamilnadu: LocationType = { id: 'tn', name: 'Tamil Nadu', type: 'State', parent: india };
-  
-  // Cities
-  const mumbai: LocationType = { id: 'mumbai', name: 'Mumbai', type: 'City', parent: maharashtra };
-  const pune: LocationType = { id: 'pune', name: 'Pune', type: 'City', parent: maharashtra };
-  const nagpur: LocationType = { id: 'nagpur', name: 'Nagpur', type: 'City', parent: maharashtra };
-  const newdelhi: LocationType = { id: 'newdelhi', name: 'New Delhi', type: 'City', parent: delhi };
-  const bangalore: LocationType = { id: 'bangalore', name: 'Bangalore', type: 'City', parent: karnataka };
-  const mysore: LocationType = { id: 'mysore', name: 'Mysore', type: 'City', parent: karnataka };
-  const chennai: LocationType = { id: 'chennai', name: 'Chennai', type: 'City', parent: tamilnadu };
-  const coimbatore: LocationType = { id: 'coimbatore', name: 'Coimbatore', type: 'City', parent: tamilnadu };
-  
-  // Districts/Areas
-  const bandra: LocationType = { id: 'bandra', name: 'Bandra', type: 'District', parent: mumbai };
-  const andheri: LocationType = { id: 'andheri', name: 'Andheri', type: 'District', parent: mumbai };
-  const dadar: LocationType = { id: 'dadar', name: 'Dadar', type: 'District', parent: mumbai };
-  const koregaon: LocationType = { id: 'koregaon', name: 'Koregaon Park', type: 'District', parent: pune };
-  const aundh: LocationType = { id: 'aundh', name: 'Aundh', type: 'District', parent: pune };
-  const chandni: LocationType = { id: 'chandni', name: 'Chandni Chowk', type: 'District', parent: newdelhi };
-  const connaught: LocationType = { id: 'connaught', name: 'Connaught Place', type: 'District', parent: newdelhi };
-  const indiranagar: LocationType = { id: 'indiranagar', name: 'Indiranagar', type: 'District', parent: bangalore };
-  const koramangala: LocationType = { id: 'koramangala', name: 'Koramangala', type: 'District', parent: bangalore };
-  const mylapore: LocationType = { id: 'mylapore', name: 'Mylapore', type: 'District', parent: chennai };
-  const adyar: LocationType = { id: 'adyar', name: 'Adyar', type: 'District', parent: chennai };
-  
-  // Localities/Neighborhoods
-  const pali: LocationType = { id: 'pali', name: 'Pali Hill', type: 'Locality', parent: bandra };
-  const bandraW: LocationType = { id: 'bandraW', name: 'Bandra West', type: 'Locality', parent: bandra };
-  const lokhandwala: LocationType = { id: 'lokhandwala', name: 'Lokhandwala Complex', type: 'Locality', parent: andheri };
-  const versova: LocationType = { id: 'versova', name: 'Versova', type: 'Locality', parent: andheri };
-  const shivaji: LocationType = { id: 'shivaji', name: 'Shivaji Park', type: 'Locality', parent: dadar };
-  const lane7: LocationType = { id: 'lane7', name: 'Lane 7', type: 'Locality', parent: koregaon };
-  const centralBizDistrict: LocationType = { id: 'cbd', name: 'Central Business District', type: 'Locality', parent: koregaon };
-  const baner: LocationType = { id: 'baner', name: 'Baner Road', type: 'Locality', parent: aundh };
-  const rajiv: LocationType = { id: 'rajiv', name: 'Rajiv Chowk', type: 'Locality', parent: connaught };
-  const janpath: LocationType = { id: 'janpath', name: 'Janpath', type: 'Locality', parent: connaught };
-  const HAL: LocationType = { id: 'HAL', name: 'HAL Old Airport Road', type: 'Locality', parent: indiranagar };
-  const forumMall: LocationType = { id: 'forumMall', name: 'Forum Mall Area', type: 'Locality', parent: koramangala };
-  const mandaveli: LocationType = { id: 'mandaveli', name: 'Mandaveli', type: 'Locality', parent: mylapore };
-  const besant: LocationType = { id: 'besant', name: 'Besant Nagar', type: 'Locality', parent: adyar };
-  
-  // Flatten the hierarchy for easy search
-  const allLocations = [
-    india,
-    maharashtra, delhi, karnataka, tamilnadu,
-    mumbai, pune, nagpur, newdelhi, bangalore, mysore, chennai, coimbatore,
-    bandra, andheri, dadar, koregaon, aundh, chandni, connaught, indiranagar, koramangala, mylapore, adyar,
-    pali, bandraW, lokhandwala, versova, shivaji, lane7, centralBizDistrict, baner, rajiv, janpath, HAL, forumMall, mandaveli, besant
+  const indiaData: LocationType[] = [
+    {
+      displayName: "INDIA",
+      locCode: "IN",
+      id: 15783,
+      parentID: 15782,
+      locIdnCode: "1",
+      locCatId: 219,
+      orgId: 130,
+      locCategoryName: "Country",
+      prodClassName: "",
+      hierarchyId: {},
+      location: [
+        {
+          displayName: "ANDHRA PRADESH",
+          locCode: "AP",
+          id: 15784,
+          parentID: 15783,
+          locIdnCode: "1",
+          locCatId: 220,
+          orgId: 130,
+          locCategoryName: "State",
+          prodClassName: "",
+          hierarchyId: {},
+          location: [
+            {
+              displayName: "Capital Region",
+              locCode: "CR",
+              id: 15785,
+              parentID: 15784,
+              locIdnCode: "1",
+              locCatId: 221,
+              orgId: 130,
+              locCategoryName: "Region",
+              prodClassName: "",
+              hierarchyId: {},
+              location: [
+                {
+                  displayName: "Krishna",
+                  locCode: "Krishna",
+                  id: 15786,
+                  parentID: 15785,
+                  locIdnCode: "1",
+                  locCatId: 222,
+                  orgId: 130,
+                  locCategoryName: "District",
+                  prodClassName: "",
+                  hierarchyId: {},
+                  location: [
+                    {
+                      displayName: "THULLUR",
+                      locCode: "THULLUR1",
+                      id: 15787,
+                      parentID: 15786,
+                      locIdnCode: "123",
+                      locCatId: 224,
+                      orgId: 130,
+                      locCategoryName: "Mandal",
+                      prodClassName: "",
+                      hierarchyId: {},
+                      location: [
+                        {
+                          displayName: "ABBARAJUPALEM",
+                          locCode: "ABBARAJUPALEM",
+                          id: 15788,
+                          parentID: 15787,
+                          locIdnCode: "1",
+                          locCatId: 225,
+                          orgId: 130,
+                          locCategoryName: "Gram Panchayat",
+                          prodClassName: "",
+                          hierarchyId: {},
+                          location: []
+                        },
+                        {
+                          displayName: "ABBARAJUPALEM",
+                          locCode: "ABB",
+                          id: 15789,
+                          parentID: 15787,
+                          locIdnCode: "1",
+                          locCatId: 226,
+                          orgId: 130,
+                          locCategoryName: "Village",
+                          prodClassName: "",
+                          hierarchyId: {},
+                          location: []
+                        },
+                        {
+                          displayName: "Eluru",
+                          locCode: "ELU",
+                          id: 15794,
+                          parentID: 15787,
+                          locIdnCode: "005",
+                          locCatId: 225,
+                          orgId: 130,
+                          locCategoryName: "Gram Panchayat",
+                          prodClassName: "",
+                          hierarchyId: {},
+                          location: [
+                            {
+                              displayName: "eluru",
+                              locCode: "1",
+                              id: 15795,
+                              parentID: 15794,
+                              locIdnCode: "1",
+                              locCatId: 226,
+                              orgId: 130,
+                              locCategoryName: "Village",
+                              prodClassName: "",
+                              hierarchyId: {},
+                              location: []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      displayName: "Vijayawada",
+                      locCode: "Vijay",
+                      id: 15796,
+                      parentID: 15786,
+                      locIdnCode: "",
+                      locCatId: 223,
+                      orgId: 130,
+                      locCategoryName: "City",
+                      prodClassName: "",
+                      hierarchyId: {},
+                      location: [
+                        {
+                          displayName: "Locality 1",
+                          locCode: "Loc 1",
+                          id: 15797,
+                          parentID: 15796,
+                          locIdnCode: "",
+                          locCatId: 228,
+                          orgId: 130,
+                          locCategoryName: "Locality",
+                          prodClassName: "",
+                          hierarchyId: {},
+                          location: []
+                        },
+                        {
+                          displayName: "Ward",
+                          locCode: "Ward 1",
+                          id: 15798,
+                          parentID: 15796,
+                          locIdnCode: "",
+                          locCatId: 229,
+                          orgId: 130,
+                          locCategoryName: "Wards",
+                          prodClassName: "",
+                          hierarchyId: {},
+                          location: []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        // Additional states for more data to make the dropdown more useful
+        {
+          displayName: "MAHARASHTRA",
+          locCode: "MH",
+          id: 15800,
+          parentID: 15783,
+          locIdnCode: "2",
+          locCatId: 220,
+          orgId: 130,
+          locCategoryName: "State",
+          prodClassName: "",
+          hierarchyId: {},
+          location: [
+            {
+              displayName: "Mumbai Region",
+              locCode: "MR",
+              id: 15801,
+              parentID: 15800,
+              locIdnCode: "2",
+              locCatId: 221,
+              orgId: 130,
+              locCategoryName: "Region",
+              prodClassName: "",
+              hierarchyId: {},
+              location: [
+                {
+                  displayName: "Mumbai",
+                  locCode: "MUM",
+                  id: 15802,
+                  parentID: 15801,
+                  locIdnCode: "2",
+                  locCatId: 223,
+                  orgId: 130,
+                  locCategoryName: "City",
+                  prodClassName: "",
+                  hierarchyId: {},
+                  location: [
+                    {
+                      displayName: "Bandra",
+                      locCode: "BAN",
+                      id: 15803,
+                      parentID: 15802,
+                      locIdnCode: "",
+                      locCatId: 228,
+                      orgId: 130,
+                      locCategoryName: "Locality",
+                      prodClassName: "",
+                      hierarchyId: {},
+                      location: []
+                    },
+                    {
+                      displayName: "Andheri",
+                      locCode: "AND",
+                      id: 15804,
+                      parentID: 15802,
+                      locIdnCode: "",
+                      locCatId: 228,
+                      orgId: 130,
+                      locCategoryName: "Locality",
+                      prodClassName: "",
+                      hierarchyId: {},
+                      location: []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   ];
+
+  // Process the data to add parent references and flatten the structure
+  const flattenedLocations: LocationType[] = [];
   
-  return allLocations;
+  const processLocation = (location: LocationType, parent: LocationType | null = null) => {
+    const locationWithParent = { ...location, parent };
+    
+    // Add to flattened array
+    flattenedLocations.push(locationWithParent);
+    
+    // Process children if any
+    if (location.location && location.location.length > 0) {
+      locationWithParent.children = location.location.map(child => {
+        return processLocation(child, locationWithParent);
+      });
+    }
+    
+    return locationWithParent;
+  };
+  
+  // Process each root location
+  indiaData.forEach(location => {
+    processLocation(location);
+  });
+  
+  return flattenedLocations;
 };
 
 const locations = createLocationHierarchy();
@@ -80,14 +290,14 @@ export const fetchLocations = async (startPoint?: string, endPoint?: string): Pr
     return locations.filter(loc => {
       // Find locations that match the type range
       let current = loc;
-      let matchesEnd = current.type === endPoint;
+      let matchesEndpoint = current.locCategoryName === endPoint;
       
-      while (current.parent && !matchesEnd) {
+      while (current.parent && !matchesEndpoint) {
         current = current.parent;
-        matchesEnd = current.type === endPoint;
+        matchesEndpoint = current.locCategoryName === endPoint;
       }
       
-      return matchesEnd;
+      return matchesEndpoint;
     });
   }
   
@@ -99,7 +309,8 @@ export const searchLocations = (query: string): LocationType[] => {
   
   const lowerQuery = query.toLowerCase();
   return locations.filter(location => 
-    location.name.toLowerCase().includes(lowerQuery) ||
-    location.type.toLowerCase().includes(lowerQuery)
+    location.displayName.toLowerCase().includes(lowerQuery) ||
+    location.locCategoryName.toLowerCase().includes(lowerQuery) ||
+    location.locCode.toLowerCase().includes(lowerQuery)
   );
 };

@@ -24,19 +24,16 @@ const LocationItem: React.FC<LocationItemProps> = ({
         hidden: { opacity: 0, y: 10 },
         visible: { opacity: 1, y: 0 }
       }}
-      className={cn(
-        "location-item group",
-        selectedLocation?.id === location.id && "bg-primary/5"
-      )}
+      className="group px-3 py-2.5 rounded-lg hover:bg-secondary cursor-pointer transition-colors"
       onClick={() => onSelect(location)}
     >
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center">
             <MapPin size={16} className="mr-2 text-primary" />
-            <span className="font-medium">{location.name}</span>
+            <span className="font-medium">{location.displayName}</span>
             <span className="ml-2 px-2.5 py-0.5 rounded-full text-xs bg-secondary text-secondary-foreground">
-              {location.type}
+              {location.locCategoryName}
             </span>
           </div>
           <div className="text-xs text-muted-foreground mt-1">
