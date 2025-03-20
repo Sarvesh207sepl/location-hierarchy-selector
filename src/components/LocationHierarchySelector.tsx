@@ -82,7 +82,7 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
     return path;
   };
   
-  // Generate a path string for display
+  // Generate a path string for display - now displaying from parent to child
   const getPathString = (location: LocationType): string => {
     const path = buildHierarchyPath(location);
     return path.map(item => item.name).join(' → ');
