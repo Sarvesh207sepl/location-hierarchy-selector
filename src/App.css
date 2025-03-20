@@ -15,6 +15,8 @@
   --border-color: #e5e7eb;
   --card-background: #ffffff;
   --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --leaf-node-bg: rgba(59, 130, 246, 0.1);
+  --non-leaf-node-bg: rgba(209, 213, 219, 0.5);
 }
 
 .dark {
@@ -27,6 +29,8 @@
   --border-color: #374151;
   --card-background: #1f2937;
   --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  --leaf-node-bg: rgba(59, 130, 246, 0.2);
+  --non-leaf-node-bg: rgba(55, 65, 81, 0.6);
 }
 
 body {
@@ -40,6 +44,18 @@ body {
 /* Common elements */
 button {
   cursor: pointer;
+}
+
+/* Leaf node styles */
+.leaf-node {
+  background-color: var(--leaf-node-bg);
+  cursor: pointer;
+}
+
+.non-leaf-node {
+  background-color: var(--non-leaf-node-bg);
+  opacity: 0.7;
+  cursor: default;
 }
 
 /* Animations */

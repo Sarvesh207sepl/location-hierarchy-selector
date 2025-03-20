@@ -308,9 +308,18 @@ export const searchLocations = (query: string): LocationType[] => {
   if (!query) return locations;
   
   const lowerQuery = query.toLowerCase();
-  return locations.filter(location => 
+  
+  // Filter to find matching locations
+  const matchingLocations = locations.filter(location => 
     location.displayName.toLowerCase().includes(lowerQuery) ||
     location.locCategoryName.toLowerCase().includes(lowerQuery) ||
     location.locCode.toLowerCase().includes(lowerQuery)
   );
+  
+  // Prioritize leaf nodes (locations without children)
+  const leafNodes = matchingLocations.filter(loc => !loc.children || loc.children.length === 0);
+  const nonLeafNodes = matchingLocations.filter(loc => loc.children && loc.children.length > 0);
+  
+  // Return leaf nodes first, then non-leaf nodes if needed
+  return [...leafNodes, ...nonLeafNodes];
 };

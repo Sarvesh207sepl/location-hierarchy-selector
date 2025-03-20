@@ -57,10 +57,14 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
     };
   }, []);
   
+  // Only allow selecting leaf nodes
   const handleSelectLocation = (location: LocationType) => {
-    setSelectedLocation(location);
-    setIsOpen(false);
-    if (onSelect) onSelect(location);
+    // Check if this is a leaf node
+    if (!location.children || location.children.length === 0) {
+      setSelectedLocation(location);
+      setIsOpen(false);
+      if (onSelect) onSelect(location);
+    }
   };
   
   const clearSelection = (resetForm: () => void) => {
@@ -73,6 +77,16 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
   
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+  };
+  
+  // Filter locations to only show leaf nodes for search results
+  const filterLeafNodes = (searchTerm: string) => {
+    const searchResults = searchTerm 
+      ? searchLocations(searchTerm) 
+      : locations;
+      
+    // Only return leaf nodes (locations without children)
+    return searchResults.filter(loc => !loc.children || loc.children.length === 0);
   };
   
   return (
@@ -98,11 +112,7 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
               <LocationDropdown
                 isOpen={isOpen}
                 isLoading={isLoading}
-                filteredLocations={
-                  formik.values.searchTerm 
-                    ? searchLocations(formik.values.searchTerm) 
-                    : locations
-                }
+                filteredLocations={filterLeafNodes(formik.values.searchTerm)}
                 selectedLocation={selectedLocation}
                 handleSelectLocation={(location) => {
                   handleSelectLocation(location);

@@ -17,10 +17,13 @@ const LocationItem: React.FC<LocationItemProps> = ({
   onSelect,
   getPathString
 }) => {
+  // Check if this is a leaf node (no children)
+  const isLeafNode = !location.children || location.children.length === 0;
+  
   return (
     <div 
-      className="location-item fade-in"
-      onClick={() => onSelect(location)}
+      className={`location-item fade-in ${isLeafNode ? 'leaf-node' : 'non-leaf-node'}`}
+      onClick={() => isLeafNode && onSelect(location)}
     >
       <div className="location-item-content">
         <div>
