@@ -1,7 +1,6 @@
-
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
-import LocationHierarchySelector from '@/components/LocationHierarchySelector';
+import LocationHierarchySelector from '@/components/LocationSelector';
 
 const Index = () => {
   const controls = useAnimation();
