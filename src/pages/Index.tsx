@@ -1,6 +1,8 @@
+
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import LocationHierarchySelector from '@/components/LocationSelector';
+import './index.css';
 
 const Index = () => {
   const controls = useAnimation();
@@ -14,8 +16,8 @@ const Index = () => {
   }, [controls, isInView]);
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-black">
-      <div className="container px-4 py-16 mx-auto">
+    <div className="page-container">
+      <div className="content-container">
         <motion.div
           ref={containerRef}
           initial="hidden"
@@ -29,18 +31,16 @@ const Index = () => {
               }
             }
           }}
-          className="max-w-3xl mx-auto"
+          className="selector-container"
         >
-          <div className="mb-12 text-center">
+          <div className="header-section">
             <motion.div
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 }
               }}
             >
-              <div className="inline-block px-3 py-1 mb-4 text-xs font-medium text-primary bg-primary/10 rounded-full">
-                Location Hierarchy
-              </div>
+              <div className="badge">Location Hierarchy</div>
             </motion.div>
             
             <motion.h1
@@ -48,7 +48,7 @@ const Index = () => {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 }
               }}
-              className="text-4xl md:text-5xl font-bold mb-4 tracking-tight"
+              className="main-title"
             >
               Find Your Perfect Location
             </motion.h1>
@@ -58,9 +58,10 @@ const Index = () => {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 }
               }}
-              className="text-lg text-muted-foreground max-w-xl mx-auto"
+              className="description"
             >
-              Explore our hierarchical location selector with intuitive design and seamless experience. Search and select locations with precise geographical context.
+              Explore our hierarchical location selector with intuitive design and seamless experience. 
+              Search and select locations with precise geographical context.
             </motion.p>
           </div>
           
@@ -69,7 +70,7 @@ const Index = () => {
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0 }
             }}
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg shadow-black/5 p-6 border border-gray-100 dark:border-gray-700"
+            className="selector-card"
           >
             <LocationHierarchySelector />
           </motion.div>
@@ -79,7 +80,7 @@ const Index = () => {
               hidden: { opacity: 0, y: 30 },
               visible: { opacity: 1, y: 0 }
             }}
-            className="mt-12 text-center text-sm text-muted-foreground"
+            className="footer-text"
           >
             <p>
               Select a location from the dropdown above to see its hierarchical details.

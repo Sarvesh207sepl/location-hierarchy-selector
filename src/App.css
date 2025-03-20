@@ -1,42 +1,64 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+:root {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --text-color: #1f2937;
+  --text-muted: #6b7280;
+  --background: #ffffff;
+  --background-muted: #f3f4f6;
+  --border-color: #e5e7eb;
+  --card-background: #ffffff;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-@keyframes logo-spin {
+.dark {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --text-color: #f9fafb;
+  --text-muted: #9ca3af;
+  --background: #111827;
+  --background-muted: #1f2937;
+  --border-color: #374151;
+  --card-background: #1f2937;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--background);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Common elements */
+button {
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

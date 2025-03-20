@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { MapPin, Check } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { LocationType } from '@/services/locationService';
+import './LocationSelector.css';
 
 interface LocationItemProps {
   location: LocationType;
@@ -19,33 +18,29 @@ const LocationItem: React.FC<LocationItemProps> = ({
   getPathString
 }) => {
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 10 },
-        visible: { opacity: 1, y: 0 }
-      }}
-      className="group px-3 py-2.5 rounded-lg hover:bg-secondary cursor-pointer transition-colors"
+    <div 
+      className="location-item fade-in"
       onClick={() => onSelect(location)}
     >
-      <div className="flex items-center justify-between">
+      <div className="location-item-content">
         <div>
-          <div className="flex items-center">
-            <MapPin size={16} className="mr-2 text-primary" />
-            <span className="font-medium">{location.displayName}</span>
-            <span className="ml-2 px-2.5 py-0.5 rounded-full text-xs bg-secondary text-secondary-foreground">
+          <div className="location-item-left">
+            <MapPin size={16} className="location-pin-icon" />
+            <span className="location-name">{location.displayName}</span>
+            <span className="location-category">
               {location.locCategoryName}
             </span>
           </div>
-          <div className="text-xs text-muted-foreground mt-1">
+          <div className="location-path">
             {getPathString(location)}
           </div>
         </div>
         
         {selectedLocation?.id === location.id && (
-          <Check size={16} className="text-primary" />
+          <Check size={16} className="check-icon" />
         )}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
