@@ -17,8 +17,9 @@ const LocationItem: React.FC<LocationItemProps> = ({
   onSelect,
   getPathString
 }) => {
-  // Check if this is a leaf node (no children)
-  const isLeafNode = !location.children || location.children.length === 0;
+  // A leaf node has no children or location array
+  const isLeafNode = (!location.children || location.children.length === 0) && 
+                     (!location.location || location.location.length === 0);
   
   return (
     <div 

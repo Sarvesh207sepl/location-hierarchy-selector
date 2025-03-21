@@ -16,8 +16,37 @@ export interface LocationType {
   children?: LocationType[];
 }
 
-// Create a nested structure of locations with Indian names based on the provided JSON
+// This function processes data in the format provided by the API
+export const processApiLocationData = (data: LocationType[]): LocationType[] => {
+  const flattenedLocations: LocationType[] = [];
+  
+  const processLocation = (location: LocationType, parent: LocationType | null = null) => {
+    const locationWithParent = { ...location, parent };
+    
+    // Add to flattened array
+    flattenedLocations.push(locationWithParent);
+    
+    // Process children if any (using location property from API)
+    if (location.location && location.location.length > 0) {
+      locationWithParent.children = location.location.map(child => {
+        return processLocation(child, locationWithParent);
+      });
+    }
+    
+    return locationWithParent;
+  };
+  
+  // Process each root location
+  data.forEach(location => {
+    processLocation(location);
+  });
+  
+  return flattenedLocations;
+};
+
+// Create a nested structure of locations based on the sample data
 const createLocationHierarchy = (): LocationType[] => {
+  // Sample data for development purposes
   const indiaData: LocationType[] = [
     {
       displayName: "INDIA",
@@ -68,73 +97,6 @@ const createLocationHierarchy = (): LocationType[] => {
                   hierarchyId: {},
                   location: [
                     {
-                      displayName: "THULLUR",
-                      locCode: "THULLUR1",
-                      id: 15787,
-                      parentID: 15786,
-                      locIdnCode: "123",
-                      locCatId: 224,
-                      orgId: 130,
-                      locCategoryName: "Mandal",
-                      prodClassName: "",
-                      hierarchyId: {},
-                      location: [
-                        {
-                          displayName: "ABBARAJUPALEM",
-                          locCode: "ABBARAJUPALEM",
-                          id: 15788,
-                          parentID: 15787,
-                          locIdnCode: "1",
-                          locCatId: 225,
-                          orgId: 130,
-                          locCategoryName: "Gram Panchayat",
-                          prodClassName: "",
-                          hierarchyId: {},
-                          location: []
-                        },
-                        {
-                          displayName: "ABBARAJUPALEM",
-                          locCode: "ABB",
-                          id: 15789,
-                          parentID: 15787,
-                          locIdnCode: "1",
-                          locCatId: 226,
-                          orgId: 130,
-                          locCategoryName: "Village",
-                          prodClassName: "",
-                          hierarchyId: {},
-                          location: []
-                        },
-                        {
-                          displayName: "Eluru",
-                          locCode: "ELU",
-                          id: 15794,
-                          parentID: 15787,
-                          locIdnCode: "005",
-                          locCatId: 225,
-                          orgId: 130,
-                          locCategoryName: "Gram Panchayat",
-                          prodClassName: "",
-                          hierarchyId: {},
-                          location: [
-                            {
-                              displayName: "eluru",
-                              locCode: "1",
-                              id: 15795,
-                              parentID: 15794,
-                              locIdnCode: "1",
-                              locCatId: 226,
-                              orgId: 130,
-                              locCategoryName: "Village",
-                              prodClassName: "",
-                              hierarchyId: {},
-                              location: []
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
                       displayName: "Vijayawada",
                       locCode: "Vijay",
                       id: 15796,
@@ -146,19 +108,6 @@ const createLocationHierarchy = (): LocationType[] => {
                       prodClassName: "",
                       hierarchyId: {},
                       location: [
-                        {
-                          displayName: "Locality 1",
-                          locCode: "Loc 1",
-                          id: 15797,
-                          parentID: 15796,
-                          locIdnCode: "",
-                          locCatId: 228,
-                          orgId: 130,
-                          locCategoryName: "Locality",
-                          prodClassName: "",
-                          hierarchyId: {},
-                          location: []
-                        },
                         {
                           displayName: "Ward",
                           locCode: "Ward 1",
@@ -180,7 +129,7 @@ const createLocationHierarchy = (): LocationType[] => {
             }
           ]
         },
-        // Additional states for more data to make the dropdown more useful
+        // Additional states
         {
           displayName: "MAHARASHTRA",
           locCode: "MH",
@@ -229,19 +178,6 @@ const createLocationHierarchy = (): LocationType[] => {
                       prodClassName: "",
                       hierarchyId: {},
                       location: []
-                    },
-                    {
-                      displayName: "Andheri",
-                      locCode: "AND",
-                      id: 15804,
-                      parentID: 15802,
-                      locIdnCode: "",
-                      locCatId: 228,
-                      orgId: 130,
-                      locCategoryName: "Locality",
-                      prodClassName: "",
-                      hierarchyId: {},
-                      location: []
                     }
                   ]
                 }
@@ -253,42 +189,19 @@ const createLocationHierarchy = (): LocationType[] => {
     }
   ];
 
-  // Process the data to add parent references and flatten the structure
-  const flattenedLocations: LocationType[] = [];
-  
-  const processLocation = (location: LocationType, parent: LocationType | null = null) => {
-    const locationWithParent = { ...location, parent };
-    
-    // Add to flattened array
-    flattenedLocations.push(locationWithParent);
-    
-    // Process children if any
-    if (location.location && location.location.length > 0) {
-      locationWithParent.children = location.location.map(child => {
-        return processLocation(child, locationWithParent);
-      });
-    }
-    
-    return locationWithParent;
-  };
-  
-  // Process each root location
-  indiaData.forEach(location => {
-    processLocation(location);
-  });
-  
-  return flattenedLocations;
+  return processApiLocationData(indiaData);
 };
 
 const locations = createLocationHierarchy();
 
+// This would be an actual API call in production
 export const fetchLocations = async (startPoint?: string, endPoint?: string): Promise<LocationType[]> => {
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 500));
   
   if (startPoint && endPoint) {
     return locations.filter(loc => {
-      // Find locations that match the type range
+      // Find locations that match the type range (from startPoint to endPoint)
       let current = loc;
       let matchesEndpoint = current.locCategoryName === endPoint;
       
@@ -304,22 +217,29 @@ export const fetchLocations = async (startPoint?: string, endPoint?: string): Pr
   return locations;
 };
 
+// Function to search locations - focus only on leaf nodes
 export const searchLocations = (query: string): LocationType[] => {
   if (!query) return locations;
   
   const lowerQuery = query.toLowerCase();
   
-  // Filter to find matching locations
-  const matchingLocations = locations.filter(location => 
+  // First, filter to find all matching locations
+  const allMatchingLocations = locations.filter(location => 
     location.displayName.toLowerCase().includes(lowerQuery) ||
     location.locCategoryName.toLowerCase().includes(lowerQuery) ||
     location.locCode.toLowerCase().includes(lowerQuery)
   );
   
-  // Prioritize leaf nodes (locations without children)
-  const leafNodes = matchingLocations.filter(loc => !loc.children || loc.children.length === 0);
-  const nonLeafNodes = matchingLocations.filter(loc => loc.children && loc.children.length > 0);
+  // Then filter to only include leaf nodes (locations without children)
+  const leafNodes = allMatchingLocations.filter(loc => 
+    (!loc.children || loc.children.length === 0) &&
+    (!loc.location || loc.location.length === 0)
+  );
   
-  // Return leaf nodes first, then non-leaf nodes if needed
-  return [...leafNodes, ...nonLeafNodes];
+  return leafNodes;
+};
+
+// Export function to load location data from API response
+export const loadLocationDataFromApi = (apiData: LocationType[]): LocationType[] => {
+  return processApiLocationData(apiData);
 };

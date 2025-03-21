@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Formik, Form } from 'formik';
-import { fetchLocations, LocationType, searchLocations } from '@/services/locationService';
+import { fetchLocations, LocationType, searchLocations, loadLocationDataFromApi } from '@/services/locationService';
 import { LocationHierarchySelectorProps } from './types';
 import SearchInput from './SearchInput';
 import LocationDropdown from './LocationDropdown';
@@ -25,6 +25,7 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
   const [filteredLocations, setFilteredLocations] = useState<LocationType[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<LocationType | null>(initialLocation);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
@@ -38,8 +39,15 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
       setIsLoading(true);
       try {
         const data = await fetchLocations(startPoint, endPoint);
-        setLocations(data);
-        setFilteredLocations(data);
+        
+        // Filter to only include leaf nodes 
+        const leafNodes = data.filter(loc => 
+          (!loc.children || loc.children.length === 0) &&
+          (!loc.location || loc.location.length === 0)
+        );
+        
+        setLocations(leafNodes);
+        setFilteredLocations(leafNodes);
       } catch (error) {
         console.error('Error fetching locations:', error);
       } finally {
@@ -63,10 +71,10 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
     };
   }, []);
   
-  // Only allow selecting leaf nodes
   const handleSelectLocation = (location: LocationType) => {
-    // Check if this is a leaf node
-    if (!location.children || location.children.length === 0) {
+    // Only allow selecting leaf nodes (this check is redundant now since we're filtering for leaf nodes)
+    if ((!location.children || location.children.length === 0) && 
+        (!location.location || location.location.length === 0)) {
       setSelectedLocation(location);
       setIsOpen(false);
       if (onSelect) onSelect(location);
@@ -87,12 +95,10 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
   
   // Filter locations to only show leaf nodes for search results
   const filterLeafNodes = (searchTerm: string) => {
-    const searchResults = searchTerm 
-      ? searchLocations(searchTerm) 
-      : locations;
-      
-    // Only return leaf nodes (locations without children)
-    return searchResults.filter(loc => !loc.children || loc.children.length === 0);
+    setSearchTerm(searchTerm);
+    if (!searchTerm) return locations;
+    
+    return searchLocations(searchTerm);
   };
   
   return (
