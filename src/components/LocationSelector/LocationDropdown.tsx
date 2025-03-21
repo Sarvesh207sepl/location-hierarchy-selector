@@ -12,6 +12,7 @@ interface LocationDropdownProps {
   selectedLocation: LocationType | null;
   handleSelectLocation: (location: LocationType) => void;
   getPathString: (location: LocationType) => string;
+  searchTerm: string;
 }
 
 const LocationDropdown: React.FC<LocationDropdownProps> = ({
@@ -20,9 +21,13 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   filteredLocations,
   selectedLocation,
   handleSelectLocation,
-  getPathString
+  getPathString,
+  searchTerm
 }) => {
   if (!isOpen) return null;
+
+  // Don't show the dropdown if we have a selection and no active search
+  if (selectedLocation && !searchTerm) return null;
 
   return (
     <div className="location-dropdown fade-in">
@@ -44,13 +49,13 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
               />
             ))}
           </div>
-        ) : (
+        ) : searchTerm ? (
           <div className="empty-state">
             <MapPin size={24} className="empty-icon" />
             <p className="empty-text">No locations found</p>
             <p className="empty-text-sub">Try adjusting your search</p>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

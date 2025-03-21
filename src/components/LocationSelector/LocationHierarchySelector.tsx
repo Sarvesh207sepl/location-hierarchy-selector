@@ -119,6 +119,7 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
                   formik.setFieldValue('searchTerm', getPathString(location));
                 }}
                 getPathString={getPathString}
+                searchTerm={formik.values.searchTerm}
               />
             </div>
             
