@@ -6,4 +6,5 @@ export interface LocationHierarchySelectorProps {
   endPoint?: string;
   onSelect?: (location: LocationType) => void;
   className?: string;
+  initialLocation?: LocationType | null;
 }

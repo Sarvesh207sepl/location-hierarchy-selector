@@ -18,14 +18,20 @@ const LocationHierarchySelector: React.FC<LocationHierarchySelectorProps> = ({
   endPoint = 'Village',
   onSelect,
   className,
+  initialLocation = null,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [locations, setLocations] = useState<LocationType[]>([]);
   const [filteredLocations, setFilteredLocations] = useState<LocationType[]>([]);
-  const [selectedLocation, setSelectedLocation] = useState<LocationType | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<LocationType | null>(initialLocation);
   const [isLoading, setIsLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  
+  // Effect to update selectedLocation when initialLocation changes
+  useEffect(() => {
+    setSelectedLocation(initialLocation);
+  }, [initialLocation]);
   
   useEffect(() => {
     const loadLocations = async () => {
