@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { MapPin } from 'lucide-react';
-import { LocationType } from '@/services/locationService';
+import { LocationType } from '@/services/types/locationTypes';
 import LocationItem from './LocationItem';
 import './LocationSelector.css';
 

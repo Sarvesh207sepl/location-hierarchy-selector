@@ -1,5 +1,4 @@
-
-import { LocationType } from '@/services/locationService';
+import { LocationType } from '@/services/types/locationTypes';
 
 // Build the hierarchy path for a location
 export const buildHierarchyPath = (location: LocationType): LocationType[] => {

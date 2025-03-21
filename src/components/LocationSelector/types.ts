@@ -1,5 +1,4 @@
-
-import { LocationType } from '@/services/locationService';
+import { LocationType } from '@/services/types/locationTypes';
 
 export interface LocationHierarchySelectorProps {
   startPoint?: string;

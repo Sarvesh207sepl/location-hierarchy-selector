@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Formik, Form } from 'formik';
-import { fetchLocations, LocationType, searchLocations, loadLocationDataFromApi } from '@/services/locationService';
+import { fetchLocations, searchLocations } from '@/services/locationService';
+import { LocationType } from '@/services/types/locationTypes';
 import { LocationHierarchySelectorProps } from './types';
 import SearchInput from './SearchInput';
 import LocationDropdown from './LocationDropdown';

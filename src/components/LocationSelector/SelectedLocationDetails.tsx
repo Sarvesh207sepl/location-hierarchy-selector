@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LocationType } from '@/services/locationService';
+import { LocationType } from '@/services/types/locationTypes';
 import './LocationSelector.css';
 
 interface SelectedLocationDetailsProps {
