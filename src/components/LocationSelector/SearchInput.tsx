@@ -33,6 +33,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
         placeholder="Search locations..."
         className="search-input"
         onClick={toggleDropdown}
+        as="textarea"
+        rows={formik.values.searchTerm && formik.values.searchTerm.length > 30 ? 2 : 1}
       />
       {formik.values.searchTerm && (
         <button
